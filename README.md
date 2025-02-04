@@ -1,35 +1,83 @@
-# install apache2 & mysql & maridb & phpmyadmin on debian 5.15.5
-# Simple and without extras
+# Installing Apache2, MySQL, MariaDB, and phpMyAdmin on Debian 5.15.5
 
-# install apache2 :
+## Step 1: Install Apache2
+To install the Apache2 web server, run the following command:
+
+```bash
 sudo apt-get install apache2
+```
 
-# dependency error :
-   sudo apt-get install apache2-utils
-   
-# install mysql server :
+If you encounter a dependency error, install the required utilities:
+
+```bash
+sudo apt-get install apache2-utils
+```
+
+## Step 2: Install MySQL Server
+To install MySQL Server, execute:
+
+```bash
 sudo apt-get install mysql-server
+```
 
-# has no installation candidate : 
-   sudo apt-get install maridb-server
-   
-# install phpmyadmin & tools :
+## Step 3: Install MariaDB Server (if MySQL is not available)
+If MySQL is not available in your repository, install MariaDB instead:
+
+```bash
+sudo apt-get install mariadb-server
+```
+
+## Step 4: Install phpMyAdmin and PHP Modules
+Install phpMyAdmin along with the required PHP modules:
+
+```bash
 sudo apt-get install php libapache2-mod-php php-mysql php-curl php-gd php-json php-mcrypt php-zip
 sudo apt-get install phpmyadmin
-! q : select apache2 
+```
 
+During installation, select `apache2` when prompted.
+
+## Step 5: Restart Apache2
+Restart the Apache2 service to apply changes:
+
+```bash
 sudo service apache2 restart
+```
 
-# change phpmyadmin password:
-sudo mysqladmin -u root password 'YOURpASS'   
+## Step 6: Change phpMyAdmin Password
+To set or change the phpMyAdmin root password, run:
 
-# phpmyadmin NotFound Error:
-sudo -H gedit /etc/apache2/apache2.conf
-//nano-vim-vi-edit-gedit
+```bash
+sudo mysqladmin -u root password 'YOUR_PASSWORD'
+```
 
-# add this:
+## Step 7: Fix phpMyAdmin Not Found Error
+If phpMyAdmin is not accessible, edit the Apache configuration file:
+
+```bash
+sudo nano /etc/apache2/apache2.conf
+```
+
+Add the following line at the end of the file:
+
+```apache
 Include /etc/phpmyadmin/apache.conf
+```
 
-# permission error :
+Save the file and restart Apache:
+
+```bash
+sudo service apache2 restart
+```
+
+## Step 8: Fix Permission Issues
+If you encounter permission errors, adjust the permissions of the web directory:
+
+```bash
 cd /var/www/
-sudo chmod 777 o-rwx html/
+sudo chmod 777 -R html/
+```
+
+## Conclusion
+You have successfully installed Apache2, MySQL (or MariaDB), and phpMyAdmin on Debian 5.15.5. Your server should now be ready for development or deployment.
+
